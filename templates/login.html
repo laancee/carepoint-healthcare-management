@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <section class="auth-panel">
+    <div class="brand-mark large-mark mb-3">+</div>
+    <p class="eyebrow">CLINIC MANAGEMENT</p>
+    <h1 class="h2 fw-bold mb-2">Welcome back</h1>
+    <p class="text-secondary mb-4">Sign in to manage patient records securely.</p>
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control form-control-lg" id="username" name="username" autocomplete="username" required minlength="3">
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control form-control-lg" id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary btn-lg w-100" type="submit">Sign in</button>
+    </form>
+    <p class="text-center mt-4 mb-0 small text-secondary">First time here? <a href="{{ url_for('register') }}">Create a staff account</a></p>
+  </section>
+  <aside class="auth-side d-none d-lg-flex">
+    <div>
+      <div class="side-icon">♡</div>
+      <h2 class="display-6 fw-bold">Better records.<br>Better care.</h2>
+      <p class="lead">A simple place for clinic staff to organize patient information.</p>
+      <ul class="side-list"><li>Patient records in one place</li><li>Quick search and updates</li><li>Works on phone and desktop</li></ul>
+    </div>
+  </aside>
+</div>
+{% endblock %}

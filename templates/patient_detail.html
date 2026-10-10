@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Patient details{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mb-4"><div><a href="{{ url_for('patient_list') }}" class="small text-decoration-none">← Back to patients</a><p class="eyebrow mt-3 mb-2">PATIENT PROFILE</p><h1 class="page-title mb-1">{{ patient.name }}</h1><p class="text-secondary mb-0">Record details</p></div><div class="d-flex gap-2 align-items-start"><a class="btn btn-outline-secondary" href="{{ url_for('patient_edit', patient_id=patient._id) }}">Edit record</a><form method="post" action="{{ url_for('patient_delete', patient_id=patient._id) }}" class="delete-form"><button class="btn btn-outline-danger" type="submit">Delete</button></form></div></div>
+<div class="row g-3">
+  <div class="col-12 col-lg-6"><section class="content-card h-100"><h2 class="h6 fw-bold mb-3">Basic information</h2><dl class="detail-list"><dt>Age</dt><dd>{{ patient.age }}</dd><dt>Sex</dt><dd>{{ patient.sex }}</dd><dt>Phone</dt><dd>{{ patient.phone or 'Not provided' }}</dd><dt>Email</dt><dd>{{ patient.email or 'Not provided' }}</dd><dt>Blood type</dt><dd><span class="soft-badge">{{ patient.blood_type }}</span></dd></dl></section></div>
+  <div class="col-12 col-lg-6"><section class="content-card h-100"><h2 class="h6 fw-bold mb-3">Health information</h2><h3 class="form-label">Known allergies</h3><p class="note-block">{{ patient.allergies or 'No allergy information recorded.' }}</p><h3 class="form-label mt-4">Medical notes</h3><p class="note-block">{{ patient.medical_notes or 'No medical notes recorded.' }}</p></section></div>
+</div>
+<p class="small text-secondary mt-3">Last updated: {{ patient.updated_at.strftime('%Y-%m-%d %H:%M UTC') if patient.updated_at else 'Not available' }}</p>
+{% endblock %}

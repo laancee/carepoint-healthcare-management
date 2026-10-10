@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<div class="mb-4"><a href="{{ url_for('patient_list') }}" class="text-decoration-none small">← Back to patients</a><p class="eyebrow mt-3 mb-2">PATIENT RECORD</p><h1 class="page-title mb-1">{{ page_title }}</h1><p class="text-secondary mb-0">Enter the information below. Only authorized staff should access patient information.</p></div>
+<form method="post" class="content-card">
+  <h2 class="h6 fw-bold mb-3">Basic information</h2>
+  <div class="row g-3">
+    <div class="col-12 col-md-6"><label class="form-label" for="name">Full name *</label><input class="form-control" id="name" name="name" value="{{ patient.name if patient else '' }}" required maxlength="120"></div>
+    <div class="col-6 col-md-3"><label class="form-label" for="age">Age *</label><input class="form-control" id="age" name="age" type="number" min="0" max="125" value="{{ patient.age if patient else '' }}" required></div>
+    <div class="col-6 col-md-3"><label class="form-label" for="sex">Sex *</label><select class="form-select" id="sex" name="sex" required><option value="">Choose...</option>{% for option in ['Female','Male','Prefer not to say'] %}<option value="{{ option }}" {% if patient and patient.sex == option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></div>
+    <div class="col-12 col-md-6"><label class="form-label" for="phone">Phone number</label><input class="form-control" id="phone" name="phone" type="tel" value="{{ patient.phone if patient else '' }}" maxlength="40"></div>
+    <div class="col-12 col-md-6"><label class="form-label" for="email">Email</label><input class="form-control" id="email" name="email" type="email" value="{{ patient.email if patient else '' }}" maxlength="254"></div>
+    <div class="col-12 col-md-4"><label class="form-label" for="blood_type">Blood type</label><select class="form-select" id="blood_type" name="blood_type"><option value="Unknown">Unknown</option>{% for option in ['A+','A-','B+','B-','AB+','AB-','O+','O-'] %}<option value="{{ option }}" {% if patient and patient.blood_type == option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></div>
+    <div class="col-12"><label class="form-label" for="allergies">Known allergies</label><textarea class="form-control" id="allergies" name="allergies" rows="2" maxlength="2000" placeholder="Enter known allergies, or write 'Not recorded'.">{{ patient.allergies if patient else '' }}</textarea></div>
+    <div class="col-12"><label class="form-label" for="medical_notes">Medical notes</label><textarea class="form-control" id="medical_notes" name="medical_notes" rows="4" maxlength="5000" placeholder="General notes for authorized clinic staff only.">{{ patient.medical_notes if patient else '' }}</textarea></div>
+  </div>
+  <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4"><a href="{{ url_for('patient_list') }}" class="btn btn-light">Cancel</a><button class="btn btn-primary" type="submit">Save record</button></div>
+</form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+  <div><p class="eyebrow mb-2">OVERVIEW</p><h1 class="page-title mb-1">Good day, {{ session.get('username') }}.</h1><p class="text-secondary mb-0">Here is your clinic's patient record overview.</p></div>
+  <a href="{{ url_for('patient_new') }}" class="btn btn-primary"><span class="me-2">+</span>Add patient</a>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-12 col-sm-6 col-xl-4"><div class="stat-card"><div class="stat-icon">♙</div><div><p class="text-secondary small mb-1">Total patient records</p><p class="stat-number mb-0">{{ total }}</p></div></div></div>
+  <div class="col-12 col-sm-6 col-xl-4"><div class="stat-card"><div class="stat-icon mint">✓</div><div><p class="text-secondary small mb-1">Database status</p><p class="h5 fw-bold mb-0">Connected</p></div></div></div>
+</div>
+<section class="content-card">
+  <div class="d-flex justify-content-between align-items-center gap-2 mb-3"><div><h2 class="h5 fw-bold mb-1">Recently updated</h2><p class="text-secondary small mb-0">Latest patient records</p></div><a href="{{ url_for('patient_list') }}" class="btn btn-outline-primary btn-sm">View all</a></div>
+  {% if recent %}
+  <div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Patient</th><th>Age</th><th>Blood type</th><th></th></tr></thead><tbody>
+  {% for p in recent %}<tr><td><div class="fw-semibold">{{ p.name }}</div><div class="small text-secondary">{{ p.email or 'No email provided' }}</div></td><td>{{ p.age }}</td><td><span class="soft-badge">{{ p.blood_type }}</span></td><td class="text-end"><a class="btn btn-sm btn-light" href="{{ url_for('patient_detail', patient_id=p._id) }}">Open</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state"><div class="empty-symbol">＋</div><h3 class="h6 fw-bold">No patient records yet</h3><p class="text-secondary">Add your first demo patient to get started.</p><a href="{{ url_for('patient_new') }}" class="btn btn-primary btn-sm">Add first patient</a></div>{% endif %}
+</section>
+{% endblock %}

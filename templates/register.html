@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<div class="auth-wrap auth-single">
+  <section class="auth-panel">
+    <p class="eyebrow">STAFF ACCESS</p>
+    <h1 class="h2 fw-bold mb-2">Create an account</h1>
+    <p class="text-secondary mb-4">Create a login for this demonstration system.</p>
+    <div class="alert alert-warning small">Demo note: public registration should be disabled or restricted before using this app with real clinic data.</div>
+    <form method="post">
+      <div class="mb-3"><label class="form-label" for="username">Username</label><input class="form-control" id="username" name="username" required minlength="3" autocomplete="username"></div>
+      <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control" id="password" name="password" type="password" required minlength="8" autocomplete="new-password"><div class="form-text">Use at least 8 characters.</div></div>
+      <div class="mb-4"><label class="form-label" for="confirm_password">Confirm password</label><input class="form-control" id="confirm_password" name="confirm_password" type="password" required minlength="8" autocomplete="new-password"></div>
+      <button class="btn btn-primary w-100" type="submit">Create account</button>
+    </form>
+    <p class="text-center mt-4 mb-0 small text-secondary">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </section>
+</div>
+{% endblock %}

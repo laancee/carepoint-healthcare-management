@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+  <div><p class="eyebrow mb-2">RECORDS</p><h1 class="page-title mb-1">Patients</h1><p class="text-secondary mb-0">Search, review, and manage patient information.</p></div>
+  <a href="{{ url_for('patient_new') }}" class="btn btn-primary">+ Add patient</a>
+</div>
+<section class="content-card">
+  <form class="row g-2 mb-3" method="get">
+    <div class="col"><label for="q" class="visually-hidden">Search patients by name</label><input id="q" name="q" value="{{ query }}" class="form-control" placeholder="Search by patient name..."></div>
+    <div class="col-auto"><button class="btn btn-outline-primary" type="submit">Search</button></div>
+    {% if query %}<div class="col-auto"><a class="btn btn-light" href="{{ url_for('patient_list') }}">Clear</a></div>{% endif %}
+  </form>
+  {% if patients %}
+  <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Patient</th><th>Age / Sex</th><th>Phone</th><th>Blood type</th><th class="text-end">Actions</th></tr></thead><tbody>
+  {% for p in patients %}<tr><td><div class="fw-semibold">{{ p.name }}</div><div class="small text-secondary">{{ p.email or 'No email provided' }}</div></td><td>{{ p.age }} / {{ p.sex }}</td><td>{{ p.phone or '—' }}</td><td><span class="soft-badge">{{ p.blood_type }}</span></td><td><div class="d-flex justify-content-end gap-1 flex-wrap"><a class="btn btn-sm btn-light" href="{{ url_for('patient_detail', patient_id=p._id) }}">View</a><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('patient_edit', patient_id=p._id) }}">Edit</a><form method="post" action="{{ url_for('patient_delete', patient_id=p._id) }}" class="delete-form"><button class="btn btn-sm btn-outline-danger" type="submit">Delete</button></form></div></td></tr>{% endfor %}
+  </tbody></table></div>
+  <p class="small text-secondary mb-0">Showing up to 250 matching records.</p>
+  {% else %}<div class="empty-state"><div class="empty-symbol">⌕</div><h2 class="h6 fw-bold">No matching patients</h2><p class="text-secondary">Try another name or add a patient record.</p></div>{% endif %}
+</section>
+{% endblock %}
